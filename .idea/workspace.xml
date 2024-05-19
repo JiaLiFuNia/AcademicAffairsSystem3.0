@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="98688c60-ee50-4aa3-bdcb-1d15e60db3e9" name="更改" comment="教务系统3.0" />
+    <list default="true" id="98688c60-ee50-4aa3-bdcb-1d15e60db3e9" name="更改" comment="教务系统3.0">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,21 +15,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "JiaLiFuNia"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;JiaLiFuNia&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/JiaLiFuNia/AcademicAffairsSystem3.0.git",
-    "accountId": "c1ba2eda-103b-42a7-b020-3ea38a351027"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/JiaLiFuNia/AcademicAffairsSystem3.0.git&quot;,
+    &quot;accountId&quot;: &quot;c1ba2eda-103b-42a7-b020-3ea38a351027&quot;
   }
-}]]></component>
-  <component name="PerforceDirect.Settings">
-    <option name="CHARSET" value="无" />
-  </component>
+}</component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 0
@@ -97,6 +96,7 @@
       <updated>1716038002077</updated>
       <workItem from="1716038004881" duration="9692000" />
       <workItem from="1716085174898" duration="2839000" />
+      <workItem from="1716089165518" duration="658000" />
     </task>
     <task id="LOCAL-00001" summary="教务系统3.0">
       <option name="closed" value="true" />
@@ -130,7 +130,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716088064008</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="教务系统3.0">
+      <option name="closed" value="true" />
+      <created>1716089216330</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1716089216330</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
