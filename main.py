@@ -15,7 +15,7 @@ def get_current_time(format_str):
 
 
 def file_write(file_path, content, mode):
-    with open(file_path, mode) as f:
+    with open(file_path, mode, encoding='utf-8') as f:
         f.write(content)
 
 
@@ -61,12 +61,14 @@ def base64_api(uname, pwd, img, typeid):
 
 
 def login(student_id, password):
+    global Cookies
     jsessionid_response = requests.post(academic_affairs_url)
     jsessionid = jsessionid_response.cookies.get("JSESSIONID")
     cookies = {
         "JSESSIONID": jsessionid,
     }
     renew_loginMessage('Cookies', jsessionid)
+    Cookies = jsessionid
     # 获取验证码图片
     verify_code_url = academic_affairs_url + '/yzm?' + str(int(time.time() * 1000 + 3))
     verify_code_response = requests.get(url=verify_code_url, cookies=cookies).content
@@ -112,10 +114,11 @@ def login(student_id, password):
     return login_response.json()
 
 
-def cookies_login(cookies):
+def cookies_login():
     global login_code
+    login_headers['Referer'] = 'https://jwc.htu.edu.cn/new/desktop'
     response = requests.get(url=academic_affairs_url + '/new/notice/countNotice', params={'_': time.time()},
-                            cookies={'JSESSIONID': cookies}, headers=login_headers_2)
+                            cookies={'JSESSIONID': Cookies}, headers=login_headers)
     try:
         json.loads(response.text)
         login_code = 0
@@ -125,6 +128,19 @@ def cookies_login(cookies):
         renew_loginMessage(old="Cookies", new='')
 
 
+def get_course_table(config):
+    data = {
+        'xnxqdm': config['term'],
+        'zc': config['week'],
+        'd1': '2024-05-13 00:00:00',
+        'd2': '2024-05-20 00:00:00',
+    }
+    login_headers['Referer'] = 'https://jwc.htu.edu.cn/new/student/xsgrkb/week.page?xnxqdm=202302'
+    response = requests.post('https://jwc.htu.edu.cn/new/student/xsgrkb/getCalendarWeekDatas',
+                             cookies={'JSESSIONID': Cookies}, headers=login_headers, data=data)
+    print(response.json())
+
+
 if __name__ == '__main__':
     gitee_url = "https://gitee.com/xhand_xbh/hnu/raw/master"
     academic_affairs_url = "https://jwc.htu.edu.cn"
@@ -132,20 +148,27 @@ if __name__ == '__main__':
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58',
     }
-    login_headers_2 = {
-        'Referer': 'https://jwc.htu.edu.cn/new/desktop',
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
-                      'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58',
-    }
     if_login_success = True
     login_code = -1
+    login_data = None
     while login_code != 0:
         login_data = read_loginMessage()
+        Cookies = login_data['Cookies']
         renew_loginMessage(old='login_time', new=get_current_time("%Y-%m-%d %H:%M:%S"))
-        if login_data['Cookies'] != "":
-            cookies_login(login_data['Cookies'])
+        if Cookies != "":
+            cookies_login()
         else:
             res = login(login_data['studentID'], login_data['password'])
             login_code = res['code']
             print(f"登录信息：{res}")
             if_login_success = login_code == 0
+    tasks_num = login_data['your_tasks']
+    tasks = login_data['config']
+    for i in tasks_num:
+        print(f"任务{i}：{tasks[i - 1]}")
+        if i == 1:
+            get_course_table(tasks[i - 1])
+        if i == 2:
+            print(2)
+        if i == 3:
+            print(3)
