@@ -25,7 +25,7 @@ def file_read(file_path, mode):
     return content
 
 
-def renew_loginMessage(old, new):
+def renew_loginMessage(old, new: str):
     login_data[old] = new
     file_write("loginMessage.json", json.dumps(login_data), "w")
 
@@ -68,7 +68,7 @@ def login(student_id, password):
     }
     renew_loginMessage('Cookies', jsessionid)
     # 获取验证码图片
-    verify_code_url = 'https://jwc.htu.edu.cn/yzm?' + str(int(time.time() * 1000 + 3))
+    verify_code_url = academic_affairs_url + '/yzm?' + str(int(time.time() * 1000 + 3))
     verify_code_response = requests.get(url=verify_code_url, cookies=cookies).content
     # 保存验证码图片
     file_write("verify_code_image.jpg", verify_code_response, "wb")
@@ -114,7 +114,7 @@ def login(student_id, password):
 
 def cookies_login(cookies):
     global login_code
-    response = requests.get(academic_affairs_url + '/new/notice/countNotice', params={'_': time.time()},
+    response = requests.get(url = academic_affairs_url + '/new/notice/countNotice', params={'_': time.time()},
                             cookies={'JSESSIONID': cookies}, headers=login_headers_2)
     try:
         json.loads(response.text)
@@ -127,7 +127,7 @@ def cookies_login(cookies):
 
 if __name__ == '__main__':
     gitee_url = "https://gitee.com/xhand_xbh/hnu/raw/master"
-    academic_affairs_url = "https://jwc.htu.edu.cn/"
+    academic_affairs_url = "https://jwc.htu.edu.cn"
     login_headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58',
