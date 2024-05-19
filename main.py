@@ -114,7 +114,7 @@ def login(student_id, password):
 
 def cookies_login(cookies):
     global login_code
-    response = requests.get(url = academic_affairs_url + '/new/notice/countNotice', params={'_': time.time()},
+    response = requests.get(url=academic_affairs_url + '/new/notice/countNotice', params={'_': time.time()},
                             cookies={'JSESSIONID': cookies}, headers=login_headers_2)
     try:
         json.loads(response.text)
@@ -122,7 +122,7 @@ def cookies_login(cookies):
         print(f"登录信息：{response.json()}")
     except json.JSONDecodeError:
         print("登录信息：Cookies已过期")
-        renew_loginMessage("Cookies", '')
+        renew_loginMessage(old="Cookies", new='')
 
 
 if __name__ == '__main__':
@@ -141,7 +141,7 @@ if __name__ == '__main__':
     login_code = -1
     while login_code != 0:
         login_data = read_loginMessage()
-        renew_loginMessage('login_time', get_current_time("%Y-%m-%d %H:%M:%S"))
+        renew_loginMessage(old='login_time', new=get_current_time("%Y-%m-%d %H:%M:%S"))
         if login_data['Cookies'] != "":
             cookies_login(login_data['Cookies'])
         else:
