@@ -92,7 +92,6 @@ def login(student_id, password):
         js_code = file_read(js_file_path, 'r')
     else:
         print("状态信息：密码加密失败，请重试！")
-
     # 替换 JavaScript 代码中的变量
     js_code = js_code.replace('var account = "";', f'var account = "{student_id}";')
     js_code = js_code.replace('var password = "";', f'var password = "{password}";')
