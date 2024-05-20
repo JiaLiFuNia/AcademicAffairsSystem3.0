@@ -6,6 +6,7 @@ import time
 
 import requests
 from js2py import eval_js
+from concurrent.futures import ThreadPoolExecutor
 
 
 def get_current_time(format_str):
@@ -14,9 +15,13 @@ def get_current_time(format_str):
     return formatted_now
 
 
-def file_write(file_path, content, mode):
-    with open(file_path, mode) as f:
-        f.write(content)
+def file_write(file_path, content, mode, encoding='gbk'):
+    if 'b' in mode:
+        with open(file_path, mode) as f:
+            f.write(content)
+    else:
+        with open(file_path, mode, encoding=encoding) as f:
+            f.write(content)
 
 
 def file_read(file_path, mode):
@@ -27,14 +32,14 @@ def file_read(file_path, mode):
 
 def renew_loginMessage(old, new: str):
     login_data[old] = new
-    file_write("loginMessage.json", json.dumps(login_data, ensure_ascii=False, indent=4), "w")
+    file_write("loginMessage.json", json.dumps(login_data, ensure_ascii=False, indent=4), "w", 'gbk')
 
 
 def read_loginMessage():
     global if_login_success
     if os.path.exists(r"./loginMessage.json") is False:
         login_message = requests.get(gitee_url + "/loginMessage.json").json()
-        file_write("loginMessage.json", json.dumps(login_message, ensure_ascii=False, indent=4), "w")
+        file_write("loginMessage.json", json.dumps(login_message, ensure_ascii=False, indent=4), "w", 'gbk')
     login_message = json.loads(file_read(file_path=r"./loginMessage.json", mode="r"))
     while login_message['studentID'] == "" or login_message['password'] == "" or if_login_success is False:
         print("状态信息：信息不完整或填写错误，请重新填写！")
@@ -83,7 +88,7 @@ def login(student_id, password):
         verify_code = 'abcd'
     # 密码加密使用了aes.js文件
     aes_response = requests.get(gitee_url + '/aes.js')
-    file_write("aes.js", aes_response.content, "wb")
+    file_write("aes.js", aes_response.content, "wb", "utf-8")
     # 读取 JavaScript 代码
     js_file_path = r'aes.js'
     # 检查文件是否存在
@@ -134,17 +139,25 @@ def get_course_table(config):
         'd1': '2024-05-13 00:00:00',
         'd2': '2024-05-20 00:00:00',
     }
-    login_headers['Referer'] = 'https://jwc.htu.edu.cn/new/student/xsgrkb/week.page?xnxqdm=202302'
+    login_headers['Referer'] = f'https://jwc.htu.edu.cn/new/student/xsgrkb/week.page?xnxqdm={config["term"]}'
     response = requests.post('https://jwc.htu.edu.cn/new/student/xsgrkb/getCalendarWeekDatas',
                              cookies={'JSESSIONID': Cookies}, headers=login_headers, data=data)
-    return response.json()
+    print(response.json())
+
+
+def adding(url, data):
+    response = requests.post(url + '/add', data=data, cookies={'JSESSIONID': Cookies}, headers=login_headers)
+    return response.text
 
 
 def add_course(config):
-    url = academic_affairs_url + "/new/student/xsxk/xklx/06"
-    add_res = []
+    course_types = ['公共任选', '专业选修', '教师教育']
+    course_urls = ['/new/student/xsxk/xklx/01', '/new/student/xsxk/xklx/06', '/new/student/xsxk/xklx/07']
+    course_index = course_types.index(config['type'])
+    url = academic_affairs_url + course_urls[course_index]
+    post_requests = []
+    post_request = {}
     for course in config['courses']:
-        print(course)
         course_code = course['course_code']
         course_name = course['course_name']
         data = {
@@ -153,21 +166,25 @@ def add_course(config):
             'qz': '-1',
             'hlct': '0'
         }
-        response = requests.post(url + '/add', data=data, cookies={'JSESSIONID': Cookies}, headers=login_headers)
-        add_res.append(response.json())
-    return add_res
+        post_request['url'] = url
+        post_request['data'] = data
+        post_requests.append(post_request)
+
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        futures = [executor.submit(adding, req["url"], req["data"]) for req in post_requests]
+        for future in futures:
+            response = future.result()
+            print(json.loads(response))
 
 
 def task_contribute(num):
-    print(f"任务{i}：\n{tasks[i - 1]}")
-    tasks_res = None
+    print(f"Task {i}：\n{tasks[i - 1]}")
     if num == 1:
-        tasks_res = get_course_table(tasks[num - 1])
+        get_course_table(tasks[num - 1])
     if num == 2:
         print(2)
     if num == 3:
-        tasks_res = add_course(tasks[num - 1])
-    print(f"{tasks_res}\n")
+        add_course(tasks[num - 1])
 
 
 if __name__ == '__main__':
@@ -191,6 +208,7 @@ if __name__ == '__main__':
             login_code = res['code']
             print(f"登录信息：{res}")
             if_login_success = login_code == 0
+    print('\n')
     tasks_num = login_data['your_tasks']
     tasks = login_data['config']
     for i in tasks_num:
