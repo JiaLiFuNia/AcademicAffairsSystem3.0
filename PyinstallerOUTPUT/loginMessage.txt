@@ -1,0 +1,39 @@
+{
+    "studentID": "2201214001",
+    "password": "xubohan2004819.",
+    "Cookies": "AF4801D767F887B45548BFCD997B1FAE",
+    "login_time": "2024-05-20 22:53:57",
+    "your_tasks": [
+        3
+    ],
+    "config": [
+        {
+            "number": 1,
+            "type": "课表查询",
+            "term": "202302",
+            "week": "1"
+        },
+        {
+            "number": 2,
+            "type": "成绩查询",
+            "term": "202302"
+        },
+        {
+            "number": 3,
+            "type": "专业选修",
+            "target_term": "202401",
+            "start_time": "2024-05-21 13:00:00",
+            "end_time": "2024-05-22 19:00:00",
+            "courses": [
+                {
+                    "course_code": "123456",
+                    "course_name": "课程1"
+                },
+                {
+                    "course_code": "123456",
+                    "course_name": "课程2"
+                }
+            ]
+        }
+    ]
+}

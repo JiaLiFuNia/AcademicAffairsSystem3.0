@@ -32,22 +32,22 @@ def file_read(file_path, mode):
 
 def renew_loginMessage(old, new: str):
     login_data[old] = new
-    file_write("loginMessage.json", json.dumps(login_data, ensure_ascii=False, indent=4), "w", 'gbk')
+    file_write("loginMessage.txt", json.dumps(login_data, ensure_ascii=False, indent=4), "w", 'gbk')
 
 
 def read_loginMessage():
     global if_login_success
-    if os.path.exists(r"./loginMessage.json") is False:
+    if os.path.exists(r"./loginMessage.txt") is False:
         login_message = requests.get(gitee_url + "/loginMessage.json").json()
-        file_write("loginMessage.json", json.dumps(login_message, ensure_ascii=False, indent=4), "w", 'gbk')
-    login_message = json.loads(file_read(file_path=r"./loginMessage.json", mode="r"))
+        file_write("loginMessage.txt", json.dumps(login_message, ensure_ascii=False, indent=4), "w", 'gbk')
+    login_message = json.loads(file_read(file_path=r"./loginMessage.txt", mode="r"))
     while login_message['studentID'] == "" or login_message['password'] == "" or if_login_success is False:
         print("状态信息：信息不完整或填写错误，请重新填写！")
-        os.startfile("loginMessage.json")
+        os.startfile("loginMessage.txt")
         had_write = 'n'
         while had_write != 'y':
             had_write = input("提示信息：是否填写完毕？(y/n)")
-        login_message = json.loads(file_read(file_path=r"./loginMessage.json", mode="r"))
+        login_message = json.loads(file_read(file_path=r"./loginMessage.txt", mode="r"))
         if_login_success = True
     print(f"配置信息：{login_message}")
     return login_message
