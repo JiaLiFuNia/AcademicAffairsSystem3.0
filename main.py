@@ -15,26 +15,26 @@ def get_current_time(format_str):
 
 
 def file_write(file_path, content, mode):
-    with open(file_path, mode, encoding='utf-8') as f:
+    with open(file_path, mode) as f:
         f.write(content)
 
 
 def file_read(file_path, mode):
-    with open(file_path, mode, encoding='utf-8') as f:
+    with open(file_path, mode) as f:
         content = f.read()
     return content
 
 
 def renew_loginMessage(old, new: str):
     login_data[old] = new
-    file_write("loginMessage.json", json.dumps(login_data), "w")
+    file_write("loginMessage.json", json.dumps(login_data, ensure_ascii=False, indent=4), "w")
 
 
 def read_loginMessage():
     global if_login_success
     if os.path.exists(r"./loginMessage.json") is False:
         login_message = requests.get(gitee_url + "/loginMessage.json").json()
-        file_write("loginMessage.json", json.dumps(login_message), "w")
+        file_write("loginMessage.json", json.dumps(login_message, ensure_ascii=False, indent=4), "w")
     login_message = json.loads(file_read(file_path=r"./loginMessage.json", mode="r"))
     while login_message['studentID'] == "" or login_message['password'] == "" or if_login_success is False:
         print("状态信息：信息不完整或填写错误，请重新填写！")
@@ -138,7 +138,37 @@ def get_course_table(config):
     login_headers['Referer'] = 'https://jwc.htu.edu.cn/new/student/xsgrkb/week.page?xnxqdm=202302'
     response = requests.post('https://jwc.htu.edu.cn/new/student/xsgrkb/getCalendarWeekDatas',
                              cookies={'JSESSIONID': Cookies}, headers=login_headers, data=data)
-    print(response.json())
+    return response.json()
+
+
+def add_course(config):
+    url = academic_affairs_url + "/new/student/xsxk/xklx/06"
+    add_res = []
+    for course in config['courses']:
+        print(course)
+        course_code = course['course_code']
+        course_name = course['course_name']
+        data = {
+            'kcrwdm': course_code,
+            'kcmc': course_name,
+            'qz': '-1',
+            'hlct': '0'
+        }
+        response = requests.post(url + '/add', data=data, cookies={'JSESSIONID': Cookies}, headers=login_headers)
+        add_res.append(response.json())
+    return add_res
+
+
+def task_contribute(num):
+    print(f"任务{i}：\n{tasks[i - 1]}")
+    tasks_res = None
+    if num == 1:
+        tasks_res = get_course_table(tasks[num - 1])
+    if num == 2:
+        print(2)
+    if num == 3:
+        tasks_res = add_course(tasks[num - 1])
+    print(f"{tasks_res}\n")
 
 
 if __name__ == '__main__':
@@ -165,10 +195,4 @@ if __name__ == '__main__':
     tasks_num = login_data['your_tasks']
     tasks = login_data['config']
     for i in tasks_num:
-        print(f"任务{i}：{tasks[i - 1]}")
-        if i == 1:
-            get_course_table(tasks[i - 1])
-        if i == 2:
-            print(2)
-        if i == 3:
-            print(3)
+        task_contribute(i)
