@@ -1,12 +1,12 @@
 import base64
-from datetime import datetime
 import json
 import os
 import time
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
 
 import requests
 from js2py import eval_js
-from concurrent.futures import ThreadPoolExecutor
 
 
 def get_current_time(format_str):

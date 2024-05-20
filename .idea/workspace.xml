@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="98688c60-ee50-4aa3-bdcb-1d15e60db3e9" name="更改" comment="新增 多线程选课&#10;优化 代码结构&#10;更改 配置文件结构">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/loginMessage.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="98688c60-ee50-4aa3-bdcb-1d15e60db3e9" name="更改" comment="新增 多线程选课&#10;优化 代码结构&#10;更改 配置文件结构" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -111,7 +107,7 @@
       <workItem from="1716195911161" duration="3483000" />
       <workItem from="1716200483340" duration="332000" />
       <workItem from="1716214532549" duration="1671000" />
-      <workItem from="1716216628917" duration="290000" />
+      <workItem from="1716216628917" duration="597000" />
     </task>
     <task id="LOCAL-00001" summary="教务系统3.0">
       <option name="closed" value="true" />
@@ -209,7 +205,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716199101709</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="新增 多线程选课&#10;优化 代码结构&#10;更改 配置文件结构">
+      <option name="closed" value="true" />
+      <created>1716217127636</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1716217127636</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +237,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="新增 多线程选课&#10;优化 代码结构&#10;更改 配置文件结构" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/3_0$main.coverage" NAME="main 覆盖结果" MODIFIED="1716216895766" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/3_0$main.coverage" NAME="main 覆盖结果" MODIFIED="1716217048597" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
