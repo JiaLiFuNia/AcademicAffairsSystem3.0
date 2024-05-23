@@ -1,39 +1,26 @@
 {
     "studentID": "2201214001",
     "password": "xubohan2004819.",
-    "Cookies": "5F91B953F429C6E06AF234FC6FC9BBAF",
-    "login_time": "2024-05-20 23:14:41",
+    "Cookies": "1698B6CD6BDAB26EC9A5437D8005FF21",
+    "login_time": "2024-05-23 20:07:12",
     "your_tasks": [
         3
     ],
-    "config": [
-        {
-            "number": 1,
-            "type": "课表查询",
-            "term": "202302",
-            "week": "1"
-        },
-        {
-            "number": 2,
-            "type": "成绩查询",
-            "term": "202302"
-        },
-        {
-            "number": 3,
-            "type": "专业选修",
-            "target_term": "202401",
-            "start_time": "2024-05-21 13:00:00",
-            "end_time": "2024-05-22 19:00:00",
-            "courses": [
-                {
-                    "course_code": "123456",
-                    "course_name": "课程1"
-                },
-                {
-                    "course_code": "123456",
-                    "course_name": "课程2"
-                }
-            ]
-        }
-    ]
+    "config": {
+        "number": 3,
+        "type": "专业选修",
+        "target_term": "202401",
+        "start_time": "2024-05-23 20:00:00",
+        "end_time": "2024-05-22 19:00:00",
+        "courses": [
+            {
+                "course_code": "10079426",
+                "course_name": "数学分析选讲"
+            },
+            {
+                "course_code": "10079427",
+                "course_name": "高等代数选讲"
+            }
+        ]
+    }
 }

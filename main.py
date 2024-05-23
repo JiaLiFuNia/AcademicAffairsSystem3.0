@@ -1,4 +1,5 @@
 import base64
+import copy
 import json
 import os
 import time
@@ -6,6 +7,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
 import requests
+from future.backports.datetime import timedelta
 from js2py import eval_js
 
 
@@ -13,6 +15,10 @@ def get_current_time(format_str):
     now = datetime.now()
     formatted_now = now.strftime(format_str)
     return formatted_now
+
+
+def str_to_datetime(time_str, format_str):
+    return datetime.strptime(time_str, format_str)
 
 
 def file_write(file_path, content, mode, encoding='gbk'):
@@ -132,22 +138,9 @@ def cookies_login():
         renew_loginMessage(old="Cookies", new='')
 
 
-def get_course_table(config):
-    data = {
-        'xnxqdm': config['term'],
-        'zc': config['week'],
-        'd1': '2024-05-13 00:00:00',
-        'd2': '2024-05-20 00:00:00',
-    }
-    login_headers['Referer'] = f'https://jwc.htu.edu.cn/new/student/xsgrkb/week.page?xnxqdm={config["term"]}'
-    response = requests.post('https://jwc.htu.edu.cn/new/student/xsgrkb/getCalendarWeekDatas',
-                             cookies={'JSESSIONID': Cookies}, headers=login_headers, data=data)
-    print(response.json())
-
-
 def adding(url, data):
     response = requests.post(url + '/add', data=data, cookies={'JSESSIONID': Cookies}, headers=login_headers)
-    return response.text
+    return response.json()
 
 
 def add_course(config):
@@ -168,23 +161,23 @@ def add_course(config):
         }
         post_request['url'] = url
         post_request['data'] = data
-        post_requests.append(post_request)
-
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        futures = [executor.submit(adding, req["url"], req["data"]) for req in post_requests]
-        for future in futures:
-            response = future.result()
-            print(json.loads(response))
-
-
-def task_contribute(num):
-    print(f"Task {i}：\n{tasks[i - 1]}")
-    if num == 1:
-        get_course_table(tasks[num - 1])
-    if num == 2:
-        print(2)
-    if num == 3:
-        add_course(tasks[num - 1])
+        post_requests.append(copy.deepcopy(post_request))
+    print(f"选课信息：{post_requests}")
+    print(f"选课时间：{config['start_time']}")
+    while True:
+        current_time = get_current_time('%Y-%m-%d %H:%M:%S.%f')
+        print(f"\t\t{current_time}")
+        if str_to_datetime(current_time, "%Y-%m-%d %H:%M:%S.%f") >= str_to_datetime(config['start_time'],
+                                                                                    "%Y-%m-%d %H:%M:%S") - timedelta(
+                seconds=2):
+            with ThreadPoolExecutor(max_workers=3) as executor:
+                futures = [executor.submit(adding, req["url"], req["data"]) for req in post_requests]
+                for future_index in range(len(futures)):
+                    response = futures[future_index].result()
+                    print(f"{post_requests[future_index]['data']['kcmc']}: {response}")
+            time.sleep(0.5)
+        else:
+            print("状态信息：未到选课时间")
 
 
 if __name__ == '__main__':
@@ -211,5 +204,4 @@ if __name__ == '__main__':
     print('\n')
     tasks_num = login_data['your_tasks']
     tasks = login_data['config']
-    for i in tasks_num:
-        task_contribute(i)
+    add_course(tasks)
