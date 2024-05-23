@@ -134,7 +134,7 @@
       <workItem from="1716438863852" duration="2276000" />
       <workItem from="1716464056157" duration="2269000" />
       <workItem from="1716466991129" duration="581000" />
-      <workItem from="1716469624545" duration="1300000" />
+      <workItem from="1716469624545" duration="1520000" />
     </task>
     <task id="LOCAL-00001" summary="教务系统3.0">
       <option name="closed" value="true" />
@@ -288,7 +288,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716467571279</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="修复 第一次登录闪退的问题">
+      <option name="closed" value="true" />
+      <created>1716471104277</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1716471104277</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -314,6 +322,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="修复 第一次登录闪退的问题" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/3_0$main.coverage" NAME="main 覆盖结果" MODIFIED="1716469722753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/3_0$main.coverage" NAME="main 覆盖结果" MODIFIED="1716471021157" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
