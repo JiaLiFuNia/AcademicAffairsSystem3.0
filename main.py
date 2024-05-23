@@ -184,6 +184,25 @@ def add_course(config):
 if __name__ == '__main__':
     gitee_url = "https://gitee.com/xhand_xbh/hnu/raw/master"
     academic_affairs_url = "https://jwc.htu.edu.cn"
+    print("""+-------------+--------+--------+------+
+|     参数名     |   类型   |   说明   | 是否必填 |
++-------------+--------+--------+------+
+|  studentID  |  字符串   |   学号   |  是   |
+|  password   |  字符串   |   密码   |  是   |
+|   Cookies   |  字符串   |  登录信息  |  否   |
+| login_time  |  字符串   |  登录时间  |  否   |
+| your_tasks  | 列表（整型） |  任务列表  |  固定  |
+|   config    |   字典   |  任务配置  |  固定  |
+|   number    |   整型   |   序号   |  固定  |
+|    type     |  字符串   |  选课类型  |  是   |
+| target_term |  字符串   |  目标学期  |  是   |
+| start_time  |  字符串   | 选课开始时间 |  是   |
+|  end_time   |  字符串   | 选课结束时间 |  否   |
+|   courses   | 列表（字典） | 目标课程信息 |  是   |
+| course_code |  字符串   |  课程代码  |  是   |
+| course_name |  字符串   |  课程名称  |  是   |
++-------------+--------+--------+------+
+""")
     login_headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) '
                       'Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.58',
