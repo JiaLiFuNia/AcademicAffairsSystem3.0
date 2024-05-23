@@ -168,9 +168,9 @@ def add_course(config):
     while True:
         current_time = get_current_time('%Y-%m-%d %H:%M:%S.%f')
         print(f"\t\t{current_time}")
-        if str_to_datetime(current_time, "%Y-%m-%d %H:%M:%S.%f") >= str_to_datetime(config['start_time'],
-                                                                                    "%Y-%m-%d %H:%M:%S") - timedelta(
-            seconds=2):
+        if (str_to_datetime(current_time, "%Y-%m-%d %H:%M:%S.%f") >= str_to_datetime(config['start_time'], "%Y-%m-%d "
+                                                                                                           "%H:%M:%S")
+                - timedelta(seconds=2)):
             with ThreadPoolExecutor(max_workers=3) as executor:
                 futures = [executor.submit(adding, req["url"], req["data"]) for req in post_requests]
                 for future_index in range(len(futures)):
