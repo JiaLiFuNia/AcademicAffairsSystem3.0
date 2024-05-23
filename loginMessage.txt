@@ -1,7 +1,7 @@
 {
-    "studentID": "2201214001",
-    "password": "xubohan2004819.",
-    "Cookies": "1698B6CD6BDAB26EC9A5437D8005FF21",
+    "studentID": "",
+    "password": "",
+    "Cookies": "",
     "login_time": "2024-05-23 20:07:12",
     "your_tasks": [
         3
