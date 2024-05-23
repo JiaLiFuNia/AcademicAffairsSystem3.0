@@ -139,6 +139,7 @@ def cookies_login():
 
 
 def adding(url, data):
+    login_headers['Referer'] = 'https://jwc.htu.edu.cn/new/desktop'
     response = requests.post(url + '/add', data=data, cookies={'JSESSIONID': Cookies}, headers=login_headers)
     return response.json()
 
@@ -169,7 +170,7 @@ def add_course(config):
         print(f"\t\t{current_time}")
         if str_to_datetime(current_time, "%Y-%m-%d %H:%M:%S.%f") >= str_to_datetime(config['start_time'],
                                                                                     "%Y-%m-%d %H:%M:%S") - timedelta(
-                seconds=2):
+            seconds=2):
             with ThreadPoolExecutor(max_workers=3) as executor:
                 futures = [executor.submit(adding, req["url"], req["data"]) for req in post_requests]
                 for future_index in range(len(futures)):
