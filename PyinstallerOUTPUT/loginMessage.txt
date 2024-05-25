@@ -1,0 +1,26 @@
+{
+    "studentID": "2201214001",
+    "password": "xubohan2004819.",
+    "Cookies": "9D61C04DE81E224D8C33F57FE3CE6D77",
+    "login_time": "2024-05-23 22:39:25",
+    "your_tasks": [
+        3
+    ],
+    "config": {
+        "number": 3,
+        "type": "专业选修",
+        "target_term": "202401",
+        "start_time": "2024-05-21 13:00:00",
+        "end_time": "2024-05-22 19:00:00",
+        "courses": [
+            {
+                "course_code": "10079426",
+                "course_name": "数学分析选讲"
+            },
+            {
+                "course_code": "10079427",
+                "course_name": "高等代数选讲"
+            }
+        ]
+    }
+}

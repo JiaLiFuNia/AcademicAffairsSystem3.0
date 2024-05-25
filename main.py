@@ -2,6 +2,7 @@ import base64
 import copy
 import json
 import os
+import sys
 import time
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
@@ -46,7 +47,12 @@ def read_loginMessage():
     if os.path.exists(r"./loginMessage.txt") is False:
         login_message = requests.get(gitee_url + "/loginMessage.json").json()
         file_write("loginMessage.txt", json.dumps(login_message, ensure_ascii=False, indent=4), "w", 'gbk')
-    login_message = json.loads(file_read(file_path=r"./loginMessage.txt", mode="r"))
+    try:
+        login_message = json.loads(file_read(file_path=r"./loginMessage.txt", mode="r"))
+    except json.JSONDecodeError:
+        os.remove("./loginMessage.txt")
+        print("状态信息：配置文件格式错误，请重新运行！")
+        return {}
     while login_message['studentID'] == "" or login_message['password'] == "" or if_login_success is False:
         print("状态信息：信息不完整或填写错误，请重新填写！")
         os.startfile("loginMessage.txt")
@@ -167,7 +173,7 @@ def add_course(config):
     print(f"选课时间：{config['start_time']}")
     while True:
         current_time = get_current_time('%Y-%m-%d %H:%M:%S.%f')
-        print(f"\t\t{current_time}")
+        print(f"\t\t\t\t{current_time}")
         if (str_to_datetime(current_time, "%Y-%m-%d %H:%M:%S.%f") >= str_to_datetime(config['start_time'], "%Y-%m-%d "
                                                                                                            "%H:%M:%S")
                 - timedelta(seconds=2)):
@@ -185,22 +191,22 @@ if __name__ == '__main__':
     gitee_url = "https://gitee.com/xhand_xbh/hnu/raw/master"
     academic_affairs_url = "https://jwc.htu.edu.cn"
     print("""+-------------+--------+--------+------+
-|     参数名     |   类型   |   说明   | 是否必填 |
+|     参数名   |     类型    |   说明   | 是否必填 |
 +-------------+--------+--------+------+
-|  studentID  |  字符串   |   学号   |  是   |
-|  password   |  字符串   |   密码   |  是   |
-|   Cookies   |  字符串   |  登录信息  |  否   |
-| login_time  |  字符串   |  登录时间  |  否   |
+|  studentID  |    字符串   |   学号    |  是   |
+|  password   |    字符串   |   密码    |  是   |
+|   Cookies   |    字符串   |  登录信息  |  否   |
+| login_time  |    字符串   |  登录时间  |  否   |
 | your_tasks  | 列表（整型） |  任务列表  |  固定  |
-|   config    |   字典   |  任务配置  |  固定  |
-|   number    |   整型   |   序号   |  固定  |
-|    type     |  字符串   |  选课类型  |  是   |
-| target_term |  字符串   |  目标学期  |  是   |
-| start_time  |  字符串   | 选课开始时间 |  是   |
-|  end_time   |  字符串   | 选课结束时间 |  否   |
+|   config    |    字典    |  任务配置   |  固定  |
+|   number    |    整型    |   序号     |  固定  |
+|    type     |    字符串   |  选课类型  |  是   |
+| target_term |    字符串   |  目标学期  |  是   |
+| start_time  |    字符串   | 选课开始时间 |  是   |
+|  end_time   |    字符串   | 选课结束时间 |  否   |
 |   courses   | 列表（字典） | 目标课程信息 |  是   |
-| course_code |  字符串   |  课程代码  |  是   |
-| course_name |  字符串   |  课程名称  |  是   |
+| course_code |    字符串   |  课程代码   |  是   |
+| course_name |    字符串   |  课程名称   |  是   |
 +-------------+--------+--------+------+
 """)
     login_headers = {
@@ -212,6 +218,8 @@ if __name__ == '__main__':
     login_data = None
     while login_code != 0:
         login_data = read_loginMessage()
+        if not login_data:
+            sys.exit()
         Cookies = login_data['Cookies']
         renew_loginMessage(old='login_time', new=get_current_time("%Y-%m-%d %H:%M:%S"))
         if Cookies != "":

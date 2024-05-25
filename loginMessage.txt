@@ -1,8 +1,8 @@
 {
-    "studentID": "",
-    "password": "",
-    "Cookies": "",
-    "login_time": "2024-05-23 20:30:14",
+    "studentID": "2201214001",
+    "password": "xubohan2004819.",
+    "Cookies": "53EA76AC3AA47FBB2A14C7F4FD45DAF7",
+    "login_time": "2024-05-25 17:25:33",
     "your_tasks": [
         3
     ],
@@ -10,7 +10,7 @@
         "number": 3,
         "type": "×¨ÒµÑ¡ÐÞ",
         "target_term": "202401",
-        "start_time": "2024-05-23 20:00:00",
+        "start_time": "2024-05-21 13:00:00",
         "end_time": "2024-05-22 19:00:00",
         "courses": [
             {
